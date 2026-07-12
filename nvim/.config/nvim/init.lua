@@ -49,10 +49,13 @@ vim.cmd.colorscheme("gruvbox")
 --require("flume").setup()
 --vim.cmd.colorscheme("flume")
 vim.cmd(":hi signcolumn guibg=NONE")
-vim.cmd(":hi statusline guibg=NONE")
+
+local status, _ = pcall(require, "mini.statusline")
+if not status then
+    vim.cmd(":hi statusline guibg=NONE")
+end
 
 require("mini.icons").setup()
-
 require("mini.statusline").setup()
 
 require("mini.pick").setup()
