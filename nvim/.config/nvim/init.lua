@@ -19,14 +19,16 @@ map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
 map({'n', 'v', 'x'}, '<leader>y', '"+y<CR>')
 map({'n', 'v', 'x'}, '<leader>d', '"+d<CR>')
-map('n', 'wd', vim.diagnostic.open_float)
+map('n', '<leader>wd', vim.diagnostic.open_float)
 
 vim.pack.add({
     { src = "https://github.com/ellisonleao/gruvbox.nvim" },
+    { src = "https://github.com/mitander/flume.nvim" },
     {
         src = "https://github.com/nvim-mini/mini.icons",
         version = "stable",
     },
+    { src = "https://github.com/nvim-mini/mini.statusline" },
     { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/nvim-mini/mini.pick" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
@@ -44,10 +46,14 @@ vim.pack.add({
 
 require("gruvbox").setup()
 vim.cmd.colorscheme("gruvbox")
+--require("flume").setup()
+--vim.cmd.colorscheme("flume")
 vim.cmd(":hi signcolumn guibg=NONE")
 vim.cmd(":hi statusline guibg=NONE")
 
 require("mini.icons").setup()
+
+require("mini.statusline").setup()
 
 require("mini.pick").setup()
 map('n', '<leader>f', ":Pick files<CR>")
@@ -56,7 +62,7 @@ map('n', '<leader>h', ":Pick help<CR>")
 require("oil").setup()
 map('n', '<leader>e', ":Oil<CR>")
 
-vim.lsp.enable({"lua_ls", "slang-server"})
+vim.lsp.enable({"lua_ls", "slang-server", "clangd"})
 map('n', '<leader>lf', vim.lsp.buf.format)
 --vim.api.nvim_create_autocmd('LspAttach', {
     --callback = function(ev)
@@ -111,7 +117,7 @@ require("blink.cmp").setup({
       }
     },
     keymap = {
-        ['<CR>'] = { 'show', 'accept' },
+        ['<CR>'] = { "select_and_accept", "fallback" },
     },
 })
 
