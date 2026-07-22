@@ -28,11 +28,21 @@ map('n', '<leader>q', ':quit<CR>')
 map({'n', 'v', 'x'}, '<leader>y', '"+y<CR>')
 map({'n', 'v', 'x'}, '<leader>d', '"+d<CR>')
 map('n', '<leader>wd', vim.diagnostic.open_float)
+map('n', '<leader>od', ':Oil --float<CR>')
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'systemverilog',
     callback = function()
         map('i', "'", "'", { buffer = true })
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function()
+        vim.wo.conceallevel= 1
+        vim.wo.wrap = true
+        vim.wo.linebreak = true
     end,
 })
 
@@ -90,8 +100,17 @@ map('n', '<leader>h', ':Pick help<CR>')
 require('oil').setup()
 map('n', '<leader>e', ':Oil<CR>')
 
-vim.lsp.enable({'lua_ls', 'slang-server', 'clangd', 'rust-analyzer', 'texlab'})
+local language_server =  {'lua_ls', 'slang_server', 'clangd', 'rust_analyzer', 'texlab'}
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = language_server
+})
+
+vim.lsp.enable(language_server)
 map('n', '<leader>lf', vim.lsp.buf.format)
+
+-- default auto complete
 --vim.api.nvim_create_autocmd('LspAttach', {
     --callback = function(ev)
             --local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -106,8 +125,6 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 --})
 --vim.cmd('set completeopt+=noselect')
 
-require('mason').setup()
-require('mason-lspconfig').setup()
 
 require('nvim-treesitter').install({
     'c', 'cpp', 'cmake', 'bash', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown'
@@ -168,7 +185,7 @@ require('obsidian').setup({
     workspaces = {
         {
             name = 'Embedded',
-            path = '~/Data/personal/knowledge-base/Embedded/'
+            path = '~/data/knowledge-base/Embedded/'
         },
     }
 })
