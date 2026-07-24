@@ -14,7 +14,7 @@ vim.o.termguicolors = true
 vim.o.undofile = true
 vim.o.incsearch = true
 vim.o.swapfile = false
-vim.o.laststatus = 3 -- Global statusline
+vim.o.laststatus = 3
 vim.o.clipboard = 'unnamedplus'
 
 vim.g.mapleader = ' '
