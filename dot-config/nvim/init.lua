@@ -27,6 +27,7 @@ map('n', '<leader>q', ':quit<CR>')
 map({'n', 'v', 'x'}, '<leader>y', '"+y')
 map({'n', 'v', 'x'}, '<leader>d', '"+d')
 map('n', '<leader>wd', vim.diagnostic.open_float)
+map('n', '<leader>pu', vim.pack.update)
 
 local filetype_customize_group = vim.api.nvim_create_augroup('customize_by_filetype', { clear = true })
 
@@ -206,6 +207,7 @@ require('blink.cmp').setup({
     },
     sources = {
         per_filetype = {
+            lua = { 'lsp', 'path', 'snippets' },
             markdown = { 'path', 'lsp' },
             tex = { 'path', 'lsp', 'snippets' }
         }
@@ -229,7 +231,7 @@ require('obsidian').setup({
     },
 })
 
-require('render-markdown').setup({})
+require('render-markdown').setup()
 
 require('orgmode').setup({
     org_agenda_files = '~/data/knowledge-base/orgfiles/**/*',
