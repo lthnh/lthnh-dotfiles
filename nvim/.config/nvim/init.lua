@@ -1,7 +1,10 @@
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.signcolumn = 'yes'
-vim.o.wrap = false
+vim.o.wrap = true
+vim.o.linebreak = true
+--vim.o.textwidth = 80
+--vim.o.formatoptions:append("a")
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
@@ -12,38 +15,54 @@ vim.o.undofile = true
 vim.o.incsearch = true
 vim.o.swapfile = false
 vim.o.laststatus = 3 -- Global statusline
-
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
-    pattern = {'*.sv', '*svh'}, callback = function()
-        vim.bo.tabstop = 2
-        vim.bo.shiftwidth = 2
-    end,
-})
+vim.o.clipboard = 'unnamedplus'
 
 vim.g.mapleader = ' '
 local map = vim.keymap.set
-map('n', '<leader>sf', ':update<CR> :source<CR>')
+map('n', 'j', 'gj')
+map('n', 'k', 'gk')
+map('n', '<leader>sf', ':update<CR> :source $MYVIMRC<CR>')
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
-map({'n', 'v', 'x'}, '<leader>y', '"+y<CR>')
-map({'n', 'v', 'x'}, '<leader>d', '"+d<CR>')
+map({'n', 'v', 'x'}, '<leader>y', '"+y')
+map({'n', 'v', 'x'}, '<leader>d', '"+d')
 map('n', '<leader>wd', vim.diagnostic.open_float)
-map('n', '<leader>od', ':Oil --float<CR>')
+
+local filetype_customize_group = vim.api.nvim_create_augroup('customize_by_filetype', { clear = true })
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'systemverilog',
+    group = filetype_customize_group,
+    pattern = { 'systemverilog' , 'verilog' },
     callback = function()
+        vim.bo.tabstop = 2
+        vim.bo.shiftwidth = 2
         map('i', "'", "'", { buffer = true })
     end,
 })
 
 vim.api.nvim_create_autocmd('FileType', {
+    group = filetype_customize_group,
     pattern = 'markdown',
     callback = function()
         vim.wo.conceallevel= 1
         vim.wo.wrap = true
         vim.wo.linebreak = true
+        vim.b.minipairs_disable = true
     end,
+})
+
+vim.api.nvim_create_autocmd({'VimEnter', 'VimLeave'}, {
+    group = vim.api.nvim_create_augroup('Plugins cleanup', { clear = true }),
+    pattern = '*',
+    callback = function()
+        local unused_plugins = vim.iter(vim.pack.get())
+                                :filter(function(x) return not x.active end)
+                                :map(function(x) return x.spec.name end)
+                                :totable()
+        if next(unused_plugins) ~= nil then
+            vim.pack.del(unused_plugins)
+        end
+    end
 })
 
 vim.pack.add({
@@ -66,10 +85,18 @@ vim.pack.add({
         version = 'main',
     },
     {
+        src = 'https://github.com/saghen/blink.compat',
+        version = vim.version.range('2.*')
+    },
+    {
         src = 'https://github.com/saghen/blink.cmp',
         version = 'v1',
     },
-    { src = 'https://github.com/obsidian-nvim/obsidian.nvim' },
+    {
+        src = 'https://github.com/obsidian-nvim/obsidian.nvim',
+        version = 'main'
+    },
+    { src = 'https://github.com/meanderingprogrammer/render-markdown.nvim' },
     { src = 'https://github.com/nvim-orgmode/orgmode' },
 })
 
@@ -97,7 +124,7 @@ require('mini.pick').setup()
 map('n', '<leader>f', ':Pick files<CR>')
 map('n', '<leader>h', ':Pick help<CR>')
 
-require('oil').setup()
+require("oil").setup()
 map('n', '<leader>e', ':Oil<CR>')
 
 local language_server =  {'lua_ls', 'slang_server', 'clangd', 'rust_analyzer', 'texlab'}
@@ -140,6 +167,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end,
 })
 
+require('blink.compat').setup()
 require('blink.cmp').setup({
     completion = {
       menu = {
@@ -169,12 +197,23 @@ require('blink.cmp').setup({
     list = {
         selection = {
             preselect = false
-        }
-    }
+        },
+    },
+    documentation = { auto_show = true },
     },
     keymap = {
         ['<CR>'] = { 'accept', 'fallback' },
     },
+    sources = {
+        per_filetype = {
+            markdown = { 'path', 'lsp' },
+            tex = { 'path', 'lsp', 'snippets' }
+        }
+    },
+    enabled = function()
+        local disabled_filetypes = { 'text' }
+        return not vim.tbl_contains(disabled_filetypes, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
+    end
 })
 
 require('obsidian').setup({
@@ -187,12 +226,14 @@ require('obsidian').setup({
             name = 'Embedded',
             path = '~/data/knowledge-base/Embedded/'
         },
-    }
+    },
 })
 
+require('render-markdown').setup({})
+
 require('orgmode').setup({
-    org_agenda_files = '~/orgfiles/**/*',
-    org_default_notes_file = '~/orgfiles/refile.org',
+    org_agenda_files = '~/data/orgfiles/**/*',
+    org_default_notes_file = '~/data/orgfiles/refile.org',
 })
 vim.lsp.enable('org')
 
