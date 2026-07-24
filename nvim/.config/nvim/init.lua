@@ -232,8 +232,8 @@ require('obsidian').setup({
 require('render-markdown').setup({})
 
 require('orgmode').setup({
-    org_agenda_files = '~/data/orgfiles/**/*',
-    org_default_notes_file = '~/data/orgfiles/refile.org',
+    org_agenda_files = '~/data/knowledge-base/orgfiles/**/*',
+    org_default_notes_file = '~/data/knowledge-base/orgfiles/refile.org',
 })
 vim.lsp.enable('org')
 
