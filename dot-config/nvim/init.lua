@@ -3,8 +3,6 @@ vim.o.relativenumber = true
 vim.o.signcolumn = 'yes'
 vim.o.wrap = true
 vim.o.linebreak = true
---vim.o.textwidth = 80
---vim.o.formatoptions:append("a")
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
@@ -69,7 +67,6 @@ vim.api.nvim_create_autocmd({'VimEnter', 'VimLeave'}, {
 vim.pack.add({
     { src = 'https://github.com/ellisonleao/gruvbox.nvim' },
     { src = 'https://github.com/mitander/flume.nvim' },
-    { src = 'https://github.com/webhooked/kanso.nvim'},
     {
         src = 'https://github.com/nvim-mini/mini.icons',
         version = 'stable',
@@ -101,13 +98,10 @@ vim.pack.add({
     { src = 'https://github.com/nvim-orgmode/orgmode' },
 })
 
-require('gruvbox').setup()
-vim.cmd.colorscheme('gruvbox')
---require('flume').setup()
---vim.cmd.colorscheme('flume')
---require('kanso').setup()
---vim.cmd.colorscheme('kanso')
---require('kanso').load('zen')
+--require('gruvbox').setup()
+--vim.cmd.colorscheme('gruvbox')
+require('flume').setup()
+vim.cmd.colorscheme('flume')
 vim.cmd(':hi signcolumn guibg=NONE')
 --vim.cmd(':hi WinSeparator guibg=NONE')
 
