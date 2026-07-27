@@ -1,0 +1,3 @@
+[submodule "dot-config/alacritty/themes/rose-pine"]
+	path = dot-config/alacritty/themes/rose-pine
+	url = https://github.com/rose-pine/alacritty

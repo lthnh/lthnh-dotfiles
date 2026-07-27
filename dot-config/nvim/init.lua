@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufLeave', {
+vim.api.nvim_create_autocmd({'BufLeave', 'WinResized'}, {
   group = vim.api.nvim_create_augroup('Redraw Graphics', { clear = true }),
   pattern = '*',
   callback = function()
@@ -117,13 +117,10 @@ vim.pack.add({
 
 --require('gruvbox').setup()
 --vim.cmd.colorscheme('gruvbox')
-require('flume').setup()
-vim.cmd.colorscheme('flume')
---require('rose-pine').setup({
-  --variant = 'moon',
-  --dark_variant = 'main'
---})
---vim.cmd.colorscheme('rose-pine')
+--require('flume').setup()
+--vim.cmd.colorscheme('flume')
+require('rose-pine').setup()
+vim.cmd.colorscheme('rose-pine')
 vim.cmd(':hi signcolumn guibg=NONE')
 --vim.cmd(':hi WinSeparator guibg=NONE')
 
