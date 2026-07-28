@@ -138,7 +138,17 @@ require('mini.pick').setup()
 map('n', '<leader>f', ':Pick files<CR>')
 map('n', '<leader>h', ':Pick help<CR>')
 
-require("oil").setup()
+require("oil").setup({
+  columns = {
+    'icon',
+    'permissions',
+    'size',
+    'mtime'
+  },
+  view_options = {
+    show_hidden = false,
+  }
+})
 map('n', '<leader>e', ':Oil<CR>')
 
 local language_server =  {'lua_ls', 'slang_server', 'clangd', 'rust_analyzer', 'texlab'}
@@ -254,12 +264,12 @@ require('obsidian').setup({
       path = '~/data/knowledge-base/Embedded/'
     },
     {
-      name = 'IC Design',
-      path = '~/data/knowledge-base/IC Design/'
+      name = 'IC_Design',
+      path = '~/data/knowledge-base/IC_Design/'
     },
     {
-      name = 'Linux Journey',
-      path = '~/data/knowledge-base/Linux Journey/'
+      name = 'Linux_Journey',
+      path = '~/data/knowledge-base/Linux_Journey/'
     },
   },
 })
