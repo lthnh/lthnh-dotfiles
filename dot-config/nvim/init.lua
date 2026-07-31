@@ -59,14 +59,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd({'BufLeave', 'WinResized'}, {
-  group = vim.api.nvim_create_augroup('Redraw Graphics', { clear = true }),
-  pattern = '*',
-  callback = function()
-    vim.cmd('redraw')
-  end,
-})
-
 vim.api.nvim_create_autocmd({'VimEnter', 'VimLeave'}, {
   group = vim.api.nvim_create_augroup('Plugins cleanup', { clear = true }),
   pattern = '*',
@@ -178,7 +170,7 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 
 
 require('nvim-treesitter').install({
-  'c', 'cpp', 'cmake', 'bash', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown'
+  'c', 'cpp', 'cmake', 'bash', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown', 'latex'
 })
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(event)
@@ -230,7 +222,7 @@ require('blink.cmp').setup({
   sources = {
     per_filetype = {
       lua = { 'lsp', 'path', 'snippets' },
-      markdown = { 'path', 'lsp' },
+      markdown = { 'lsp' },
       tex = { 'path', 'lsp', 'snippets' },
       toml = { 'path', 'lsp' }
     }
