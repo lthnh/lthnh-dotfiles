@@ -170,8 +170,21 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 
 
 require('nvim-treesitter').install({
-  'c', 'cpp', 'cmake', 'bash', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown', 'latex'
+  'c', 'cpp', 'cmake', 'bash', 'linkerscript', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown', 'latex'
 })
+
+vim.filetype.add({
+  extension = {
+    cmd = 'linkerscript'
+  }
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = filetype_customize_group,
+  pattern = 'linkerscript',
+  callback = function() vim.treesitter.start() end,
+})
+
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(event)
     if event.data.kind == 'update' and event.data.spec.name == 'nvim-treesitter' then
