@@ -31,7 +31,7 @@ local filetype_customize_group = vim.api.nvim_create_augroup('customize_by_filet
 
 vim.api.nvim_create_autocmd('FileType', {
   group = filetype_customize_group,
-  pattern = 'lua',
+  pattern = {'lua', 'org'},
   callback = function()
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
