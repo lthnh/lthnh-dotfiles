@@ -102,7 +102,7 @@ vim.pack.add({
   },
   {
     src = 'https://github.com/obsidian-nvim/obsidian.nvim',
-    version = 'main'
+    version = vim.version.range('3.*.*')
   },
   { src = 'https://github.com/meanderingprogrammer/render-markdown.nvim' },
   { src = 'https://github.com/nvim-orgmode/orgmode' },
