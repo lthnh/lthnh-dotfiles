@@ -294,6 +294,7 @@ symbol = " "
 
 [vlang]
 symbol = " "
+disabled = true
 
 [typst]
 symbol = " "
@@ -306,3 +307,17 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+[custom.verilog]
+symbol = "Verilog"
+detect_extensions = ["v", "vh"]
+format = "via [$symbol($output)]($style) "
+style = "bold blue"
+disabled = false
+
+[custom.systemverilog]
+symbol = "SystemVerilog"
+detect_extensions = ["sv", "svh"]
+format = "via [$symbol($output)]($style) "
+style = "bold blue"
+disabled = false
