@@ -45,6 +45,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
     map('i', "'", "'", { buffer = true })
+    map('i', "`", "`", { buffer = true })
   end,
 })
 
@@ -143,7 +144,7 @@ require("oil").setup({
 })
 map('n', '<leader>e', ':Oil<CR>')
 
-local language_server =  {'lua_ls', 'slang_server', 'clangd', 'rust_analyzer', 'texlab'}
+local language_server =  {'lua_ls', 'slang_server', 'clangd', 'rust_analyzer', 'texlab', 'jsonls'}
 
 require('mason').setup()
 require('mason-lspconfig').setup({
@@ -170,12 +171,16 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 
 
 require('nvim-treesitter').install({
-  'c', 'cpp', 'cmake', 'bash', 'linkerscript', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown', 'latex'
+  'c', 'cpp', 'cmake', 'bash', 'linkerscript', 'systemverilog', 'vhdl', 'rust', 'yaml', 'markdown', 'latex', 'json'
 })
 
 vim.filetype.add({
   extension = {
-    cmd = 'linkerscript'
+    cmd = 'linkerscript',
+    v = 'verilog',
+    vh = 'verilog',
+    sv = 'systemverilog',
+    svh = 'systemverilog'
   }
 })
 
