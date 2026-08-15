@@ -140,7 +140,15 @@ require("oil").setup({
   },
   view_options = {
     show_hidden = false,
-  }
+  },
+  keymaps = {
+    ["<CR>"] = {
+      desc = "Open the entry and close oil",
+      callback = function()
+        require("oil").select({ close = true })
+      end
+    },
+  },
 })
 map('n', '<leader>e', ':Oil<CR>')
 
