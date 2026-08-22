@@ -279,15 +279,15 @@ require('obsidian').setup({
   workspaces = {
     {
       name = 'Embedded',
-      path = '~/data/knowledge-base/Embedded/'
+      path = '~/Personal/knowledge-base/Embedded/'
     },
     {
       name = 'IC_Design',
-      path = '~/data/knowledge-base/IC_Design/'
+      path = '~/Personal/knowledge-base/IC_Design/'
     },
     {
       name = 'Linux_Journey',
-      path = '~/data/knowledge-base/Linux_Journey/'
+      path = '~/Personal/knowledge-base/Linux_Journey/'
     },
   },
 })
